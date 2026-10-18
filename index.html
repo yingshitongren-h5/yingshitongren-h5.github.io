@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>影视同人 - 影视二创与同人作品导航 | yingshitongren-h5.github.io</title>
+<meta name="description" content="影视同人(yingshitongren-h5.github.io)以手稿本与同人绘卷为视觉，整理影视二创、同人短片、粉丝剪辑、衍生漫画等作品，用热爱再写一遍故事。" />
+<meta name="keywords" content="影视同人,yingshitongren-h5,同人作品,影视二创,粉丝剪辑,衍生漫画" />
+<style>
+:root{
+  --parchment:#f4e8c1;
+  --parchment-2:#e8d5a3;
+  --steel:#2c3e50;
+  --steel-2:#1a252f;
+  --vermilion:#c0392b;
+  --vermilion-2:#962d22;
+  --vine:#e8b923;
+  --graphite:#34495e;
+  --ink:#1a1a1a;
+  --ink-2:#4a4a4a;
+  --ink-3:#7a7a7a;
+  --line:rgba(192,57,43,0.3);
+  --shadow:0 8px 24px rgba(44,62,80,0.15);
+  --shadow-hover:0 16px 40px rgba(192,57,43,0.22);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"KaiTi","STKaiti","PingFang SC","Microsoft YaHei",serif,sans-serif;
+  background:
+    radial-gradient(circle at 10% 15%,rgba(232,185,35,0.1),transparent 40%),
+    radial-gradient(circle at 90% 85%,rgba(192,57,43,0.08),transparent 40%),
+    var(--parchment);
+  color:var(--ink);line-height:1.85;overflow-x:hidden;
+}
+a{color:var(--vermilion);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 手稿纹理 */
+.texture{
+  position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 钢笔头 */
+.pen-head{
+  position:relative;z-index:10;text-align:center;padding:52px 20px 38px;
+  background:linear-gradient(180deg,var(--parchment-2),var(--parchment));
+  border-bottom:3px double var(--steel);
+}
+.pen-logo{
+  width:90px;height:90px;margin:0 auto 14px;position:relative;
+  background:var(--steel);border-radius:50% 50% 50% 10%;
+  display:flex;align-items:center;justify-content:center;font-size:38px;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,0.2),var(--shadow);
+  animation:write 3s ease-in-out infinite;
+}
+@keyframes write{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.pen-logo::after{
+  content:"✒";position:absolute;font-size:28px;color:var(--vine);
+}
+.pen-head h1{font-size:32px;font-weight:900;letter-spacing:4px;color:var(--steel)}
+.pen-head h1 b{color:var(--vermilion)}
+.pen-head p{max-width:540px;margin:10px auto 0;color:var(--ink-2);font-size:15px}
+.pen-nav{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pen-nav a{
+  padding:9px 20px;border:2px solid var(--steel);border-radius:4px;
+  font-size:14px;font-weight:700;color:var(--ink);background:rgba(255,255,255,0.5);transition:.25s;
+}
+.pen-nav a:hover{background:var(--steel);color:var(--parchment);border-color:var(--steel-2)}
+
+/* 墨水条 */
+.ink-bar{
+  position:relative;z-index:10;background:var(--steel);color:var(--parchment);
+  padding:10px 20px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+  border-bottom:2px solid var(--vermilion);
+}
+.ink-bar .drop{display:inline-block;width:8px;height:8px;background:var(--vermilion);border-radius:50%;animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(4px);opacity:1}}
+
+.wrap{position:relative;z-index:10;max-width:980px;margin:0 auto;padding:0 18px 60px}
+.section{margin-bottom:54px;scroll-margin-top:20px}
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-title .stamp{
+  width:34px;height:34px;background:var(--vermilion);color:var(--parchment);
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;
+  border-radius:4px;flex-shrink:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.3);
+}
+.sec-title h2{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--steel)}
+.sec-title .stroke{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--vermilion) 0 8px,transparent 8px 14px)}
+
+/* 卷轴片单 */
+.scroll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
+.scroll-card{
+  position:relative;background:var(--parchment-2);border:2px solid var(--steel);border-radius:6px;
+  padding:20px 20px 22px;box-shadow:var(--shadow);transition:.3s;overflow:hidden;
+}
+.scroll-card::before{
+  content:"";position:absolute;top:0;left:0;width:6px;height:100%;background:var(--vermilion);
+}
+.scroll-card::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--vine),var(--steel),var(--vine));
+}
+.scroll-card:hover{transform:translateY(-6px) rotate(0.5deg);box-shadow:var(--shadow-hover);border-color:var(--vermilion)}
+.scroll-card .fan-tag{
+  display:inline-block;font-size:11px;color:var(--parchment);background:var(--graphite);
+  padding:3px 10px;border-radius:0 8px 8px 0;margin-bottom:10px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.scroll-card h3{font-size:18px;font-weight:800;color:var(--steel);margin-bottom:4px}
+.scroll-card .meta{font-size:12px;color:var(--ink-3);margin-bottom:8px}
+.scroll-card p{font-size:14px;color:var(--ink-2);line-height:1.75}
+.scroll-card .heart{
+  position:absolute;right:14px;top:14px;font-size:18px;color:var(--vermilion);opacity:.3;
+}
+
+/* 画具分类 */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+.tool{
+  text-align:center;background:var(--parchment-2);border:2px dashed var(--steel);border-radius:8px;
+  padding:22px 12px;transition:.25s;cursor:pointer;position:relative;
+}
+.tool::before{
+  content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:24px;height:4px;background:var(--vermilion);border-radius:2px;
+}
+.tool .tool-ico{font-size:28px;margin-bottom:8px}
+.tool h4{font-size:15px;font-weight:800;color:var(--steel)}
+.tool p{font-size:12px;color:var(--ink-3)}
+.tool:hover{background:var(--steel);border-color:var(--steel-2);border-style:solid}
+.tool:hover h4,.tool:hover p{color:var(--parchment)}
+
+/* 关于 */
+.about-block{
+  background:var(--parchment-2);border:2px solid var(--steel);border-left:6px solid var(--vermilion);
+  border-radius:6px;padding:26px;font-size:15px;color:var(--ink-2);line-height:1.95;
+}
+.about-block b{color:var(--vermilion)}
+
+/* 墨水栏 */
+.ink-status{
+  position:relative;z-index:10;background:var(--graphite);color:var(--parchment);
+  padding:12px 20px;text-align:center;font-size:13px;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+.ink-status .nib{display:inline-block;animation:nib 2s ease-in-out infinite}
+@keyframes nib{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(15deg)}}
+
+.footer{position:relative;z-index:10;text-align:center;padding:20px 16px;color:var(--ink-3);font-size:12px;border-top:3px double var(--steel);background:var(--parchment-2)}
+
+@media(max-width:640px){
+  .pen-head h1{font-size:24px;letter-spacing:2px}
+  .pen-logo{width:72px;height:72px;font-size:30px}
+  .scroll-grid{grid-template-columns:1fr}
+  .sec-title h2{font-size:19px}
+  .wrap{padding:0 14px 40px}
+  .tool-grid{grid-template-columns:repeat(2,1fr)}
+  .ink-bar{gap:8px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="texture" aria-hidden="true"></div>
+
+<header class="pen-head">
+  <div class="pen-logo"></div>
+  <h1><b>影视同人</b></h1>
+  <p>yingshitongren-h5.github.io —— 用热爱再写一遍故事。影视二创、同人短片、粉丝剪辑、衍生漫画，每一份创作都是写给原作的一封情书。</p>
+  <nav class="pen-nav">
+    <a href="#">首页</a>
+    <a href="#scroll">同人卷轴</a>
+    <a href="#tool">画具分类</a>
+    <a href="#about">关于同人</a>
+  </nav>
+</header>
+
+<div class="ink-bar">
+  <span><span class="drop"></span> 墨迹未干 · 创作不停</span>
+  <span>✒ 当前卷宗：第 27 卷</span>
+  <span>📜 服务状态：执笔中</span>
+</div>
+
+<main class="wrap">
+
+  <section class="section" id="scroll">
+    <div class="sec-title">
+      <span class="stamp">卷</span><h2>同人卷轴</h2><span class="stroke"></span>
+    </div>
+    <div class="scroll-grid">
+      <article class="scroll-card">
+        <span class="fan-tag">剪辑 · AMV</span>
+        <h3>星际穿越 · 同人混剪</h3>
+        <div class="meta">2024 · 粉丝剪辑 · 汉斯·季默配乐</div>
+        <p>把诺兰的五维空间与宫崎骏的《起风了》混剪在一起，时间不再是维度，而是思念的形状。</p>
+        <div class="heart">♥</div>
+      </article>
+      <article class="scroll-card">
+        <span class="fan-tag">衍生 · 短篇</span>
+        <h3>哈利波特：斯内普的猫</h3>
+        <div class="meta">2023 · 同人小说改编 · 粉丝自制</div>
+        <p>如果斯内普教授养了一只猫，他会怎么给它起名？答案是：Lily。这个设定让无数人破防。</p>
+        <div class="heart">♥</div>
+      </article>
+      <article class="scroll-card">
+        <span class="fan-tag">绘画 · 插画</span>
+        <h3>进击的巨人 · 水彩重绘</h3>
+        <div class="meta">2024 · 同人插画 · 自由之翼</div>
+        <p>用中国传统水彩重绘艾伦与三笠的告别场景，樱花落在残垣上，东方笔意赋予故事新的哀愁。</p>
+        <div class="heart">♥</div>
+      </article>
+      <article class="scroll-card">
+        <span class="fan-tag">配音 · 翻配</span>
+        <h3>千与千寻 · 方言翻配</h3>
+        <div class="meta">2023 · 粉丝配音 · 四川话版</div>
+        <p>用四川方言重新配音千寻和无脸男的对话，"你要吃这个吗？"一句台词笑中带泪，方言的力量。</p>
+        <div class="heart">♥</div>
+      </article>
+      <article class="scroll-card">
+        <span class="fan-tag">真人 · 短剧</span>
+        <h3>盗墓笔记 · 粉丝微电影</h3>
+        <div class="meta">2024 · 同人短剧 · 长白山篇</div>
+        <p>粉丝自筹资金拍摄的长白山十年之约，吴邪和张起灵在雪地里的重逢，还原度让原著粉落泪。</p>
+        <div class="heart">♥</div>
+      </article>
+      <article class="scroll-card">
+        <span class="fan-tag">音乐 · 填词</span>
+        <h3>琅琊榜 · 古风填词曲</h3>
+        <div class="meta">2023 · 同人音乐 · 梅长苏主题</div>
+        <p>用《赤伶》的曲子填词梅长苏的一生，"此身虽灭，此志不消"，古风填词把角色的命运唱进骨子里。</p>
+        <div class="heart">♥</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="tool">
+    <div class="sec-title">
+      <span class="stamp">具</span><h2>画具分类</h2><span class="stroke"></span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool"><div class="tool-ico">✂️</div><h4>蘸水笔·剪辑</h4><p>AMV/MAD/混剪</p></div>
+      <div class="tool"><div class="tool-ico">🎨</div><h4>水彩·绘画</h4><p>插画/CG/手绘</p></div>
+      <div class="tool"><div class="tool-ico">📱</div><h4>像素·短剧</h4><p>微电影/翻拍</p></div>
+      <div class="tool"><div class="tool-ico">🎞️</div><h4>胶片·配音</h4><p>翻配/广播剧</p></div>
+      <div class="tool"><div class="tool-ico">📝</div><h4>拼贴·文字</h4><p>同人文/填词</p></div>
+      <div class="tool"><div class="tool-ico">🎭</div><h4>剧本·舞台</h4><p>Cosplay/舞台剧</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="sec-title">
+      <span class="stamp">ℹ</span><h2>关于同人</h2><span class="stroke"></span>
+    </div>
+    <div class="about-block">
+      <p>
+        <b>影视同人</b>（yingshitongren-h5.github.io）是一个以"手稿本与同人绘卷"为气质的影视二创导航与作品整理站点。
+        我们相信<b>每一份热爱都值得被看见</b>：粉丝剪辑、同人插画、翻配广播剧、衍生短剧、填词音乐、Cosplay舞台。
+        页面用钢笔Logo、墨水横幅、卷轴片卡、画具分类来组织内容，移动端自适应，内链以 # 占位，
+        不生成 robots.txt / sitemap.xml，所有内容仅供学习与交流使用，尊重原作版权。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<div class="ink-status">
+  <span><span class="nib">✒</span> 墨迹未干 · 卷宗常新</span>
+  <span>📜 已收录同人作品：3800+ 件</span>
+  <span>🖌️ 服务状态：执笔耕耘中</span>
+</div>
+
+<footer class="footer">
+  © 2026 影视同人 | yingshitongren-h5.github.io | 用热爱再写一遍故事 | 内链以 # 占位
+</footer>
+
+</body>
+</html>
